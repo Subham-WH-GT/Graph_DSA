@@ -1,0 +1,38 @@
+# Cycle detect in directed Graph (DFS)
+
+    bool cycleDFS(vector<int> adj[], int u,  vector<bool>&visited, vector<bool>inStack){
+        
+        visited[u]=true;
+        inStack[u]=true;
+        
+        for(int &v : adj[u]){
+            
+            if(!visited[v] and cycleDFS(adj,v,visited,inStack)){
+                return true;
+            }
+            
+            else if(inStack[v]==true){
+                return true;
+            }
+        }
+        
+        //inStack[u]=false;
+        
+        return false;
+    }
+    
+    bool isCyclic(int V, vector<int> adj[]) {
+        // code here
+        
+        vector<bool>visited(V,false);
+        vector<bool>inStack(V,false);
+        
+        for(int i=0;i<V;i++){
+            if(!visited[i] and cycleDFS(adj,i,visited,inStack)){
+                return true;
+            }
+        }
+        
+        return false;
+        
+    }
