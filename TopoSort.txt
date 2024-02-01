@@ -1,0 +1,75 @@
+# Topological Sort using DFS . . .	
+
+void TopoSort(int u,vector<int> adj[], vector<bool>&visited, stack<int>&s){
+	    
+	    visited[u]=true;
+	    
+	    for(int &v: adj[u]){
+	        if(!visited[v]){
+	            TopoSort(v,adj,visited,s);
+	        }
+	    }
+	    s.push(u);
+	    
+	}
+	
+	//Function to return list containing vertices in Topological order. 
+	vector<int> topoSort(int V, vector<int> adj[]) 
+	{
+	    // code here
+	    vector<bool>visited(V,false);
+	    stack<int>s;
+	    for(int i=0;i<V;i++){
+	        if(!visited[i]){
+	            TopoSort(i,adj,visited,s);
+	        }
+	    }
+	    
+	    vector<int>ans;
+	    while(!s.empty()){
+	        ans.push_back(s.top());
+	        s.pop();
+	    }
+	    return ans;
+	}
+
+
+# Topological Sort Using BFS . . . (Kahan's Algorithm)
+
+  	vector<int> topoSort(int V, vector<int> adj[]) 
+	{
+	    // code here
+	    queue<int>q;
+	   
+	   vector<int>inDeg(V,0);
+	   for(int i=0;i<V;i++){
+	       for(int &v: adj[i]){
+	           inDeg[v]++;
+	       }
+	   }
+	   
+	   for(int i=0;i<V;i++){
+	       if(inDeg[i]==0){
+	           q.push(i);
+	       }
+	   }
+	   
+	   vector<int>ans;
+	   
+	   while(!q.empty()){
+	       int curr=q.front();
+	       q.pop();
+	       ans.push_back(curr);
+	       for(int &v: adj[curr]){
+	           
+	           inDeg[v]--;
+	           if(inDeg[v]==0){
+	               q.push(v);
+	           }
+	       }
+	   }
+	   
+	   return ans;
+	}
+
+
