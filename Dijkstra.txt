@@ -1,0 +1,29 @@
+ vector int dijkstra(int V, vectorvectorint adj[], int source)
+    {
+         Code here
+        
+        vectorintans(V,INT_MAX);
+        priority_queuepairint,int,vectorpairint,int,greaterpairint,intpq;
+        
+        ans[source]=0;
+        pq.push({0,source});
+        
+        while(!pq.empty()){
+            int d=pq.top().first;
+            int node=pq.top().second;
+            pq.pop();
+            
+            for(auto &vec adj[node]){
+                
+                int adjNode=vec[0];
+                int wt=vec[1];
+                
+                if(d+wt  ans[adjNode]){
+                    ans[adjNode]=d+wt;
+                    pq.push({d+wt,adjNode});
+                }
+            }
+        }
+        
+        return ans;
+    }
