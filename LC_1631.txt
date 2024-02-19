@@ -1,0 +1,41 @@
+ vector<vector<int>>dirs={{-1,0},{1,0},{0,-1},{0,1}};
+    typedef pair<int,pair<int,int>>P;
+    int minimumEffortPath(vector<vector<int>>& h) {
+        int m=h.size();
+        int n=h[0].size();
+
+        vector<vector<int>>ans(m,vector<int>(n,INT_MAX));
+        ans[0][0]=0;
+        priority_queue<P,vector<P>,greater<P>>pq;
+        pq.push({0,{0,0}});
+
+        auto isSafe=[&] (int x, int y){
+            return x>=0 and x<m and y>=0 and y<n;
+        };
+
+        while(!pq.empty()){
+            int diff=pq.top().first;
+            auto coor=pq.top().second;
+            pq.pop();
+            int x=coor.first;
+            int y=coor.second;
+
+            for(auto &dir:dirs){
+                int x_=x+dir[0];
+                int y_=y+dir[1];
+
+                if(isSafe(x_,y_)){
+
+                    int absDif=abs(h[x][y]-h[x_][y_]);
+                    int maxDif=max(absDif,diff);
+
+                    if(ans[x_][y_]> maxDif){
+                        ans[x_][y_]=maxDif;
+                        pq.push({maxDif,{x_,y_}});
+                    }
+
+                }
+            }
+        }
+        return ans[m-1][n-1];
+    }
