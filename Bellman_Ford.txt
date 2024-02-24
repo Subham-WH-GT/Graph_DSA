@@ -1,0 +1,29 @@
+vector<int> bellman_ford(int V, vector<vector<int>>& edges, int S) {
+        // Code here
+        vector<int>ans(V,1e8);
+        ans[S]=0;
+        
+        for(int count=1;count<=V-1;count++){
+            for(auto& edge:edges){
+                int u=edge[0];
+                int v=edge[1];
+                int wt=edge[2];
+                
+                if(ans[u]!= 1e8 && ans[u]+wt < ans[v]){
+                    ans[v]=ans[u]+wt;
+                }
+            }
+        }
+        
+        for(auto& edge:edges){
+            int u=edge[0];
+            int v=edge[1];
+            int wt=edge[2];
+            
+            if(ans[u]!= 1e8 && ans[u]+wt < ans[v]){
+                    return {-1};
+                }
+        }
+        
+        return ans;
+    }
